@@ -1,0 +1,97 @@
+Node.js Microservice Task
+You have 50–55 minutes. Focus on design, clarity, and core logic rather than full production setup.
+
+Step 1 — Architecture & API Design
+Design a small Payments Microservice that can:
+• Create accounts
+Method: POST
+URL: /accounts
+Input Payload: {"id": string, "balance": number}
+Output Expected: {"id": string, "balance": number}
+Error Resp: { 400: "invalid payload", 500: "internal server error" }
+
+• Get account details
+Method: GET
+URL: /accounts/{id}
+Output Expected: {"id": string, "balance": number}
+Error Resp: { 404: "account not found", 500: "internal server error" }
+
+• Create payment orders (deduct from balance)
+Method: POST
+URL: /orders
+Input Payload: {"accountId": string, "amount": number}
+Output Expected: {"orderId": string, "status": string}
+Error Resp: { 40: "invalid payload", 402: "insufficient balance", 500: "internal server error"}
+
+• List orders
+Method: GET
+URL: /orders
+Output Expected: {"orderId": string, "status": string}
+Error Resp: { 500: "internal server error" }
+
+Architectural Diagram Components
+
+Instructions:
+1. Draw a simple architecture diagram showing:
+
+• Services (Accounts, Orders, Events)
+Accounts Service: Handles account creation and Retrieval of account details
+Orders Service: Manages Creation of Orders and listing of payment orders
+Events Service: Emits and handles events (order creation)
+
+• Data flow
+Accounts Service: Interacts with the in memory data storage for accounts.
+Orders Service: Interacts with the in memory data storage for orders.
+For data persistence in memory storage is used.
+Events are emitted to a simple log (console.log or a file).
+
+2. Define 3–4 endpoints with:
+
+• Method + URL
+
+• Input payload
+
+• Expected output
+
+• Error responses
+
+Note: You do not need a full DB or Redis yet — in-memory storage or simple placeholders are fine.
+
+Step 2 — Core Function Implementation
+Implement the core function that creates a payment order:
+• Deducts the account balance atomically
+
+• Updates order status to COMPLETED
+
+• Emits an order.created event (can be a JSON log, console.log, or file)
+
+Requirements:
+• Include comments explaining your logic
+
+• Explain in plain English how you prevent two simultaneous orders from overdrawing the account
+
+• Use in-memory storage if you want (array/object)
+
+• Use UUIDs for IDs if possible
+
+Step 3 — Short Note / Example Calls
+Write a short README or note including:
+• How to run your code
+
+• Example calls (curl or script) to demonstrate:
+
+1. Creating an account
+
+2. Getting account details
+
+3. Creating a successful order
+
+4. Creating an order that fails due to insufficient funds
+
+5. Listing orders
+
+• How events would be emitted in production
+
+• One known limitation or tradeoff of your design
+
+Keep the design note <=200 words.
